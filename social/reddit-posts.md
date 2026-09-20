@@ -230,3 +230,48 @@ Each K8s module works well with my networking modules:
 And I built an MCP server for Kubernetes that gives AI assistants direct cluster access for troubleshooting: https://github.com/kogunlowo123/mcp-server-kubernetes
 
 All modules are open source. If you're deploying managed Kubernetes and writing your own Terraform from scratch, these might save you some time. Happy to take feedback or PRs.
+
+---
+
+## Post 6: r/devops — Agentic AI for Platform Engineering (2026-09-20)
+
+**Subreddit:** r/devops
+
+**Title:** How we use agentic AI for Kubernetes ops: architecture, code, and lessons from production
+
+**Body:**
+
+We've been running autonomous agents in our platform engineering workflow for a few months and wanted to share what the architecture looks like in practice, since most posts on this topic are either vague or toy examples.
+
+**What the agent actually does:**
+
+Alert fires in Alertmanager → webhook hits our ops agent service → agent executes this sequence:
+
+1. kubectl get/describe on the affected resources
+2. Pull pod logs (tries --previous for crash diagnostics)
+3. Query Prometheus for correlated metrics (last 15 min)
+4. Fetch recent deployment events from CI/CD
+5. Reason over all of it → produce a root cause hypothesis with confidence score
+6. Post findings + evidence to incident Slack channel
+
+Median time-to-root-cause went from 34 minutes to under 2 minutes for the alert classes we've covered.
+
+**The action envelope (where we landed after a lot of iteration):**
+
+Read operations: immediate, no approval
+Write operations: proposed via GitHub PR, requires one approval
+Destructive operations (node drain, deployment rollback): requires explicit on-call sign-off
+
+We started with full autonomy on writes and had two incidents in the first week where the agent's reasoning was correct but the action had unintended side effects. Moved everything behind PR gates and haven't had a problem since.
+
+**Stack:**
+
+- LangChain AgentExecutor
+- Claude Opus 5 for reasoning (Haiku for high-frequency classification tasks)
+- FastAPI webhook handler
+- DynamoDB for audit log
+- Redis for action rate limiting
+
+**Code and full architecture writeup:** https://www.citadelcloudmanagement.com/blog/agentic-ai-platform-engineering
+
+Happy to answer questions about the implementation — particularly the security considerations and how we handle prompt injection via alert payloads, which turned out to be a real concern we underestimated initially.

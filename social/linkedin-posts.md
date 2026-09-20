@@ -148,3 +148,42 @@ The hardest part of open source isn't writing the code. It's maintaining it. Pro
 If you're considering open-sourcing your infrastructure work: do it. Start with one module. Make it good. The compound returns -- in skill, reputation, and community -- are worth far more than whatever you'd charge for it.
 
 Build in the open. Share what you learn. The infrastructure community is better when we stop solving the same problems in isolation.
+
+---
+
+## Post 6: Agentic AI for Platform Engineering (2026-09-20)
+
+**Target Article:** https://www.citadelcloudmanagement.com/blog/agentic-ai-platform-engineering
+
+---
+
+Platform engineers are still spending 30+ minutes per incident on root cause analysis.
+
+An agentic AI system does it in under two minutes — and it doesn't need to be paged.
+
+Here's what a production-ready Kubernetes operations agent actually looks like:
+
+The agent receives an alert from Alertmanager. It queries Prometheus for correlated metrics, fetches pod logs, pulls recent deployment history, reasons over the data, and posts a root cause hypothesis with evidence to the incident Slack channel.
+
+No human in the loop. No alert fatigue. A 30-second brief instead of a 30-minute investigation.
+
+The key design decision most teams get wrong: starting with full autonomy instead of read-only + escalation.
+
+Read-only agents build trust quickly. You see the agent's reasoning. You validate it against what you'd have found yourself. You catch the edge cases before they cause damage.
+
+Only then do you expand the action envelope.
+
+The teams that skip this step are the ones who end up writing post-mortems about their autonomous agent.
+
+For platform engineering, the highest-value agentic use cases in order:
+
+1. Incident triage (high frequency, bounded blast radius)
+2. Cloud cost anomaly detection and correction
+3. Kubernetes self-healing
+4. Infrastructure drift detection and remediation
+
+I wrote up the architecture, code, security considerations, and a comparison of autonomy models.
+
+Link in comments.
+
+#PlatformEngineering #AgenticAI #DevOps #Kubernetes #CloudOps #LLMOps
