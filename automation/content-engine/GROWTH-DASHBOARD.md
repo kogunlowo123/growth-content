@@ -12,6 +12,7 @@
 | Date | Total URLs | Growth |
 |------|-----------|--------|
 | 2026-09-20 | 231 | baseline |
+| 2026-09-22 | ~231 | stable (WebFetch summarizer returned ~185 blog URLs; total count unchanged — no new sitemap URLs detected since last run) |
 
 ---
 
@@ -20,6 +21,7 @@
 | Date | URLs Submitted | HTTP Status | Notes |
 |------|---------------|-------------|-------|
 | 2026-09-20 | 10 | 202 Accepted | Top 10 most recent blog posts submitted |
+| 2026-09-22 | 10 | 202 Accepted | Next batch: AI agent tiers, ISO-42001, governed agents, k8s security, zero-trust, enterprise AI stack, AI security arch, k8s cost opt, SOC-2 |
 
 **URLs Submitted 2026-09-20:**
 1. https://www.citadelcloudmanagement.com/blog/nist-ai-rmf-revision-baseline-for-ai-agents
@@ -45,6 +47,7 @@
 | 04 | Pre-engine | articles/04-aws-waf-protection.md | AWS WAF protection | ~2100 | Published |
 | 05 | Pre-engine | articles/05-mcp-servers-guide.md | MCP servers infrastructure | ~2500 | Published |
 | 06 | 2026-09-20 | articles/06-agentic-ai-platform-engineering.md | agentic AI platform engineering | ~2400 | Ready to publish |
+| 07 | 2026-09-22 | articles/07-platform-engineering-idp.md | platform engineering internal developer platform | ~2800 | Ready to publish |
 
 ---
 
@@ -53,6 +56,7 @@
 | Date | Article | LinkedIn | Reddit | Dev.to |
 |------|---------|----------|--------|--------|
 | 2026-09-20 | 06-agentic-ai-platform-engineering | Drafted | Drafted (r/devops) | Drafted |
+| 2026-09-22 | 07-platform-engineering-idp | Drafted | Drafted (r/kubernetes) | Drafted |
 
 ---
 
@@ -61,8 +65,8 @@
 | Priority | Keyword | Status |
 |----------|---------|--------|
 | 1 | agentic AI | ✅ Used 2026-09-20 |
-| 2 | platform engineering | Next |
-| 3 | cloud cost optimization | Queued |
+| 2 | platform engineering | ✅ Used 2026-09-22 |
+| 3 | cloud cost optimization | Next |
 | 4 | DevSecOps | Queued |
 | 5 | LLMOps | Queued |
 | 6 | zero trust | Queued |
@@ -101,6 +105,43 @@
 - LinkedIn post: `social/linkedin-posts.md` (Post 6)
 - Reddit post: `social/reddit-posts.md` (Post 6, r/devops)
 - Dev.to article: `devto-ready/06-agentic-ai-platform-engineering.md`
+
+**Commits:** 1 commit pushed to main branch
+
+**Report:** Sent via Resend API
+
+---
+
+### 2026-09-22 (Run 2)
+
+**Time:** 17:30 CDT
+
+**Sitemap Check:**
+- Total URLs: ~231 (stable; no new pages detected since Run 1)
+- Previous: 231
+- Growth: 0 new URLs detected
+
+**Blog sitemap_blogs_1.xml:** 404 (same as Run 1; using main sitemap)
+
+**IndexNow:**
+- Submitted: 10 URLs (batch 2 — different from Run 1 batch)
+- Response: 202 Accepted
+
+**New Articles Today (added to repo since last run):** 0 new via git log
+
+**Article Written:** `articles/07-platform-engineering-idp.md`
+- Keyword: platform engineering internal developer platform
+- Word count: ~2,800
+- Internal links: 6
+- FAQ section: Yes (6 questions)
+- Comparison tables: Yes (3 tables: infra abstraction, developer portal, GitOps)
+- Code examples: Yes (Crossplane XRD, Backstage template, ArgoCD ApplicationSet, Kyverno policy, ServiceMonitor)
+- Platform maturity model table: Yes
+
+**Distribution Created:**
+- LinkedIn post: `social/linkedin-posts.md` (Post 7)
+- Reddit post: `social/reddit-posts.md` (Post 7, r/kubernetes)
+- Dev.to article: `devto-ready/07-platform-engineering-idp.md`
 
 **Commits:** 1 commit pushed to main branch
 

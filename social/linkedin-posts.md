@@ -187,3 +187,41 @@ I wrote up the architecture, code, security considerations, and a comparison of 
 Link in comments.
 
 #PlatformEngineering #AgenticAI #DevOps #Kubernetes #CloudOps #LLMOps
+
+---
+
+## Post 7: Platform Engineering — Internal Developer Platform (2026-09-22)
+
+**Target Article:** https://www.citadelcloudmanagement.com/blog/platform-engineering-internal-developer-platform-2026
+
+---
+
+Most platform engineering initiatives stall for the same reason: scope is too large at the start.
+
+Teams try to build Backstage, Crossplane, ArgoCD, and a full observability stack simultaneously. Six months later, nothing is production-ready and developers are still opening tickets.
+
+Here's what actually works: build one thin golden path first.
+
+One language. One service type. One deployment target. Fully self-service. That's it.
+
+The four layers an IDP needs:
+
+**1. Infrastructure abstraction (Crossplane)**
+Developers `kubectl apply` a YAML that says "give me a PostgreSQL database." The platform provisions it. No RDS console, no VPC config, no parameter groups. The platform team writes the CompositeResourceDefinition once; developers get a clean API forever.
+
+**2. Developer portal (Backstage)**
+A software template that scaffolds a new microservice — repo, CI pipeline, Dockerfile, Helm chart, RBAC config, observability setup — in under two minutes. This single template demonstrates more platform value than six months of infrastructure work.
+
+**3. GitOps deployment (ArgoCD ApplicationSets)**
+The platform team owns the deployment pipeline pattern. Teams drop their manifests into a directory; ArgoCD auto-creates the Application. No per-team pipeline config. No "how do I deploy this?" questions.
+
+**4. Observability auto-discovery (Prometheus + ServiceMonitor)**
+Any service with a label gets scraped. No ticket, no config PR, no on-call engineer to ask. The platform ships the ServiceMonitor once; every onboarded service inherits it.
+
+The 90-day goal isn't a complete platform. It's proof: one team successfully shipped a production service without opening a single infrastructure ticket.
+
+That proof unlocks the next investment cycle.
+
+Full architecture, tool comparisons, and maturity model in the article ↓
+
+#PlatformEngineering #InternalDeveloperPlatform #Kubernetes #DevOps #CloudNative #Backstage #Crossplane

@@ -275,3 +275,54 @@ We started with full autonomy on writes and had two incidents in the first week 
 **Code and full architecture writeup:** https://www.citadelcloudmanagement.com/blog/agentic-ai-platform-engineering
 
 Happy to answer questions about the implementation — particularly the security considerations and how we handle prompt injection via alert payloads, which turned out to be a real concern we underestimated initially.
+
+---
+
+## Post 7: r/kubernetes — Platform Engineering IDP (2026-09-22)
+
+**Subreddit:** r/kubernetes
+
+**Title:** How we structured our Internal Developer Platform: Crossplane + Backstage + ArgoCD — architecture and hard lessons
+
+**Body:**
+
+We've been running a platform engineering team for 14 months. Wanted to share the current architecture and specifically the mistakes we made, since most writeups skip that part.
+
+**The stack:**
+
+- **Crossplane** for infrastructure abstraction (CompositeResourceDefinitions that expose developer-friendly APIs over cloud primitives)
+- **Backstage** for developer portal + software templates
+- **ArgoCD with ApplicationSets** for GitOps deployment
+- **Kyverno** for policy enforcement at admission
+- **Prometheus Operator + ServiceMonitors** for auto-discovered observability
+
+**Mistake 1: Building everything at once**
+
+We tried to launch all four layers simultaneously. After four months, we had nothing production-ready. Developers were still opening tickets.
+
+What worked: we shipped one Backstage template for our most common service type (a Go gRPC service) and got one team using it. That one template, when it worked reliably, was more persuasive than any architecture diagram we had made.
+
+**Mistake 2: Crossplane XRDs without versioning**
+
+We shipped v1alpha1 CompositeResourceDefinitions and made breaking changes without notice. Teams had Crossplane-provisioned resources fail silently during upgrades. We now treat XRDs like external APIs: versioned, with deprecation periods and migration docs.
+
+**Mistake 3: Treating Backstage as a documentation site**
+
+Our initial Backstage deployment was basically a Confluence replacement with nicer UI. The value unlock came when we wired software templates to actually do things — create repos, trigger CI, register resources. If your Backstage templates don't provision infrastructure end-to-end, they're under-delivering.
+
+**What's worked really well:**
+
+Kyverno policies that enforce resource limits, block privileged containers, and require specific labels — shipped once by the platform team, inherited by every onboarded service automatically. No per-team action required.
+
+ArgoCD ApplicationSets with a Git directory generator. Teams add a directory to the platform-manifests repo; ArgoCD creates the Application automatically in the right namespace with the right project. We've onboarded 30 teams in 6 months without a single manual ArgoCD config step.
+
+**Current state:**
+
+- 47 teams onboarded to the platform
+- Average time-to-first-deployment for a new service: 18 minutes (was 4 days before)
+- Infrastructure tickets from dev teams: down 80% since launch
+- Platform NPS from engineering: 42 (up from -8 at launch)
+
+**Full architecture writeup with code examples:** https://www.citadelcloudmanagement.com/blog/platform-engineering-internal-developer-platform-2026
+
+Happy to answer questions about the Crossplane setup specifically — that's where we've seen the most complexity and have the most detailed learnings.
